@@ -29,13 +29,29 @@ function setupCart() {
       for (var i = 0; i < addButtons.length; i++) {
             addButtons[i].onclick = addItem;
       }
+      
 }
+
 function addItem(e) {
       // this is to have the e.target. for the nextsibling 
       var foodItem = e.target.nextElementSibling;
-      // value of the id attribute for foodItem
-      var foodID = foodItem.valueOf("id");
-      var foodDescription = foodItem.cloneNode;
+      // value of the id attribute for foodItem ?
+      var foodID = foodItem.id.value;
+      // clone of the foodItem and all its elements
+      var foodDescription = foodItem.cloneNode(true);
       var cartBox = document.getElementById("cart");
-      document.createElement("span");
+
+      // this is where I got confused
+      var duplicateOrder = false;
+      for (var i = 0; i < cartBox.length; i++) {
+            if (cartBox.childNodes[i].id === foodID) {
+                  cartBox.firstChild[i] += 1;
+            }
+      }
+     if (duplicateOrder == false) {
+           var orderCount = document.createElement("SPAN");
+           orderCount.textContent = 1;
+           orderCount = foodDescription.firstChild;
+           cartBox +=foodDescription;
+      }
 }
