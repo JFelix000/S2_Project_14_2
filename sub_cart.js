@@ -21,37 +21,40 @@
       the customer.
 
 */
+// starts setupCart when the page is loaded.
 window.onload = setupCart;
 
 function setupCart() {
       // regarding any element in the addButton class
       var addButtons = document.getElementsByClassName("addButton");
+
       for (var i = 0; i < addButtons.length; i++) {
             addButtons[i].onclick = addItem;
       }
-      
 }
 
 function addItem(e) {
-      // this is to have the e.target. for the nextsibling 
+      // targets the event's next sibling
       var foodItem = e.target.nextElementSibling;
       // value of the id attribute for foodItem ?
-      var foodID = foodItem.id.value;
+      var foodID = foodItem.getAttribute("id");
       // clone of the foodItem and all its elements
       var foodDescription = foodItem.cloneNode(true);
       var cartBox = document.getElementById("cart");
-
-      // this is where I got confused
       var duplicateOrder = false;
-      for (var i = 0; i < cartBox.length; i++) {
-            if (cartBox.childNodes[i].id === foodID) {
-                  cartBox.firstChild[i] += 1;
+      for (var n = cartBox.firstChild; n = n.nextElementSibling; n !== null) {
+            if (n.id === foodID) {
+                  duplicateOrder = true;
+                  n.firstElementChild.textContent++;
+                  break;
             }
       }
-     if (duplicateOrder == false) {
-           var orderCount = document.createElement("SPAN");
-           orderCount.textContent = 1;
-           orderCount = foodDescription.firstChild;
-           cartBox +=foodDescription;
+      // after the for loop determine whether duplicateOrder is still false
+      if (duplicateOrder === false) {
+            var orderCount = document.createElement("span");
+            orderCount.textContent = "1";
+            foodDescription.insertBefore(orderCount, foodDescription.firstChild);
+            cartBox.appendChild(foodDescription);
       }
+
 }
